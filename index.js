@@ -1,11 +1,8 @@
-
+import express from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
 
-const express = require("express");
-const app = express();
-const product = require("./api/product");
 dotenv.config()
 
 const configuration = new Configuration({
@@ -14,10 +11,10 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.use("/api/product", product);
 
 app.get('/', async (req, res) => {
     res.status(200).send({
@@ -25,7 +22,7 @@ app.get('/', async (req, res) => {
     })
   })
 
-  app.post('/', async (req, res) => {
+app.post('/', async (req, res) => {
     try {
       const prompt = req.body.prompt;
   
@@ -47,7 +44,7 @@ app.get('/', async (req, res) => {
       console.error(error)
       res.status(500).send(error || 'Sorry, something went wrong. Please try again later.');
     }
-  })
-  
+})
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
