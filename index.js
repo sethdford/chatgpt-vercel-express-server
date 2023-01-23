@@ -1,8 +1,21 @@
+
+import * as dotenv from 'dotenv'
+import cors from 'cors'
+import { Configuration, OpenAIApi } from 'openai'
+
 const express = require("express");
 const app = express();
 const product = require("./api/product");
+dotenv.config()
 
-app.use(express.json({ extended: false }));
+const configuration = new Configuration({
+  apiKey: process.env.API_KEY,
+});
+
+const openai = new OpenAIApi(configuration);
+
+app.use(cors())
+app.use(express.json())
 
 app.use("/api/product", product);
 
