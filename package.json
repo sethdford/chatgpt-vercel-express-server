@@ -1,23 +1,26 @@
 {
-  "name": "chatgpt-vercel-express-server",
+  "name": "express-vercel",
   "version": "1.0.0",
-  "description": "It is what it is, the name says it all",
+  "description": "Deploy express js to vercel.",
   "main": "index.js",
+  "engines": {
+    "node" : "14.x"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sethdford/chatgpt-vercel-express-server.git"
+    "url": "git+https://github.com/hatuanem199801/express-vercel.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sethdford/chatgpt-vercel-express-server/issues"
+    "url": "https://github.com/hatuanem199801/express-vercel/issues"
   },
-  "homepage": "https://github.com/sethdford/chatgpt-vercel-express-server#readme",
+  "homepage": "https://github.com/hatuanem199801/express-vercel#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.17.1"
   }
 }
