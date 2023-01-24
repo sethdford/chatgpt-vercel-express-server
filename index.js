@@ -10,6 +10,11 @@ const configuration = new Configuration({
   organization: "org-ShuX8L2JRNB0wQnwoxYcHsYG"
 });
 
+const headers = {
+  'Authorization': `Bearer ${apiKey}`,
+  'Content-Type': 'application/json'
+};
+
 //const response = await openai.listEngines();
 
 console.log(process.env.API_KEY);
@@ -32,6 +37,8 @@ app.post('/', async (req, res) => {
       //console.log(req.body);
       //const prompt = req.body.prompt;
       //console.log(prompt);
+      req.headers(headers);
+
       const response = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: `Hello world`, // The prompt is the text that the model will use to generate a response.
@@ -40,6 +47,9 @@ app.post('/', async (req, res) => {
         top_p: 1, // alternative to sampling with temperature, called nucleus sampling
         frequency_penalty: 0.5, // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
         presence_penalty: 0, // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+        stream: false,
+        logprobs: null,
+      stop: "\n"
       });
   
       res.status(200).send({
