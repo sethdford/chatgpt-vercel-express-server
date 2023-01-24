@@ -1,14 +1,15 @@
-import * as dotenv from 'dotenv'
-import { Configuration, OpenAIApi } from 'openai'
-import express from 'express'
-import cors from 'cors'
+const express = require('express');
+const app = express();
 
-dotenv.config()
+const bodyParser = require('body-parser');
 
-const configuration = new Configuration({
-  apiKey: process.env.API_KEY,
-  organization: "org-ShuX8L2JRNB0wQnwoxYcHsYG"
-});
+app.use(bodyParser.json());
+
+const { OpenAIApi } = require("openai");
+
+const openai = new OpenAIApi();
+
+
 
 //const headers = {
 // 'Authorization': `Bearer ${apiKey}`,
@@ -19,9 +20,9 @@ const configuration = new Configuration({
 
 console.log(process.env.API_KEY);
 
-const openai = new OpenAIApi(configuration);
 
-const app = express()
+
+
 app.use(cors())
 app.use(express.json())
 
@@ -32,41 +33,34 @@ app.get('/', async (req, res) => {
     })
   })
 
-app.post('/', async (req, res) => {
-    try {
-      //console.log(req.body);
-      //const prompt = req.body.prompt;
-      //console.log(prompt);
-      //req.headers(headers);
+  app.post('/', async (req, res) => {
+    app.post('https://api.openai.com/v1/completions', async (req, res) => {
+      try {
+          const request_options = {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + process.env.API_KEY
+              },
+              body: {
+                  model: req.body.model,
+                  prompt: req.body.prompt,
+                  max_tokens: 7,
+                  temperature: 0
+              }
+          }
 
-      const prompt = `\ninput: What is human life expectancy in the United States?{}`
-     
-
-      const response = await openai.createCompletion("text-davinci-001", {
-          prompt: prompt,
-          temperature: 0,
-          max_tokens: 100,
-          top_p: 1,
-          frequency_penalty: 0,
-          presence_penalty: 0,
-          stop: ["{}", "\ninput:"],
-        });
-         
-      console.log(response.data.choices[0].text);
-
-      res.status(200).send({
-        bot: response.data.choices[0].text
-      });
-  
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.status);
-        console.log(error.response.data);
-      } else {
-        console.log(error.message);
+          openai.createCompletion(request_options)
+              .then((response) => {
+                  res.send({ response });
+              })
+              .catch(err => {
+                  console.log(err.message);
+              })
+      } catch (error) {
+          console.log(error);
       }
-      res.status(500).send(error || 'Sorry, something went wrong. Please try again later.');
-    }
+  });
 })
 
 const PORT = process.env.PORT || 8080;
