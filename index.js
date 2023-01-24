@@ -8,6 +8,7 @@ dotenv.config()
 const configuration = new Configuration({
   apiKey: process.env.API_KEY,
 });
+console.log(process.env.API_KEY);
 
 const openai = new OpenAIApi(configuration);
 
@@ -24,9 +25,9 @@ app.get('/', cors(), async (req, res) => {
 
 app.post('/', cors(), async (req, res) => {
     try {
-      log.console(req.body);
+      console.log(req.body);
       const prompt = req.body.prompt;
-      log.console(prompt);
+      console.log(prompt);
       const response = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: `${prompt}`, // The prompt is the text that the model will use to generate a response.
