@@ -39,9 +39,8 @@ app.post('/', async (req, res) => {
       //console.log(prompt);
       //req.headers(headers);
 
-      const prompt = `Answer the following question:
-      What is human life expectancy in the United States?`
-
+      const prompt = `input: What is human life expectancy in the United States?
+      output:`
      
 
       const response = await openai.createCompletion("text-davinci-001", {
@@ -51,7 +50,7 @@ app.post('/', async (req, res) => {
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0,
-          stop: ["\n"]
+          stop: ["input:"],
         });
          
       console.log(response.data.choices[0].text);
