@@ -1,7 +1,7 @@
-import express from 'express'
 import * as dotenv from 'dotenv'
-import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
+import express from 'express'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -22,6 +22,11 @@ app.get('/',cors(), async (req, res) => {
       message: 'Hello from chat-gpt-server !!'
     })
   })
+
+app.head("/", cors(), (req, res) => {
+    console.info("HEAD /");
+    res.sendStatus(204);
+})
 
 app.post('/', cors(), async (req, res) => {
     try {
