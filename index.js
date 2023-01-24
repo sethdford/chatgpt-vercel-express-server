@@ -15,20 +15,14 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.options('*', cors())
 
-app.get('/',cors(), async (req, res) => {
+app.get('/', async (req, res) => {
     res.status(200).send({
       message: 'Hello from chat-gpt-server !!'
     })
   })
 
-app.head("/", cors(), (req, res) => {
-    console.info("HEAD /");
-    res.sendStatus(204);
-})
-
-app.post('/', cors(), async (req, res) => {
+app.post('/', async (req, res) => {
     try {
       const prompt = req.body.prompt;
   
