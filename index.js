@@ -39,11 +39,14 @@ app.post('/', async (req, res) => {
       //console.log(prompt);
       //req.headers(headers);
 
-      const response = await openai.createCompletion({
+      const response = await openai.createCompletion(
+        {
           model: "text-davinci-003",
-          prompt: "Hello world",
-          timeout: 20000
-      });
+          prompt: "Hello world" 
+        },
+        {
+          timeout: 10000
+        });
       
       console.log(response.data.choices[0].text);
 
