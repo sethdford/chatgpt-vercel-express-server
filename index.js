@@ -12,18 +12,19 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const app = express()
-app.use(cors())
+//app.use(cors())
 app.use(express.json())
 
 
-app.get('/', async (req, res) => {
+app.get('/', cors(), async (req, res) => {
     res.status(200).send({
       message: 'Hello from chat-gpt-server !!'
     })
   })
 
-app.post('/', async (req, res) => {
+app.post('/', cors(), async (req, res) => {
     try {
+      log.console(req.body);
       const prompt = req.body.prompt;
       log.console(prompt);
       const response = await openai.createCompletion({
