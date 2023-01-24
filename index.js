@@ -39,14 +39,18 @@ app.post('/', async (req, res) => {
       //console.log(prompt);
       //req.headers(headers);
 
-      const response = await openai.createCompletion(
-        {
-          model: "text-davinci-003",
-          prompt: "Hello world" 
-        },
-        {
-          timeout: 10000
-        });
+      const prompt = `Answer the following question:
+      What is human life expectancy in the United States?
+      {}`
+      const response = await openai.createCompletion("text-davinci-001", {
+          prompt: prompt,
+          temperature: .7,
+          max_tokens: 100,
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0,
+          stop: ["{}"],
+      });
       
       console.log(response.data.choices[0].text);
 
