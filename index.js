@@ -40,8 +40,7 @@ app.post('/', async (req, res) => {
       //req.headers(headers);
 
       const prompt = `Answer the following question:
-      What is human life expectancy in the United States?
-      {}`
+      What is human life expectancy in the United States?`
 
      
 
@@ -52,7 +51,7 @@ app.post('/', async (req, res) => {
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0,
-          stop: ["{}"],
+          stop: ["\n"]
         });
          
       console.log(response.data.choices[0].text);
