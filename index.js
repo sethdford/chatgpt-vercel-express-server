@@ -13,17 +13,17 @@ console.log(process.env.API_KEY);
 const openai = new OpenAIApi(configuration);
 
 const app = express()
-//app.use(cors())
+app.use(cors())
 app.use(express.json())
 
 
-app.get('/', cors(), async (req, res) => {
+app.get('/', async (req, res) => {
     res.status(200).send({
       message: 'Hello from chat-gpt-server !!'
     })
   })
 
-app.post('/', cors(), async (req, res) => {
+app.post('/', async (req, res) => {
     try {
       console.log(req.body);
       const prompt = req.body.prompt;
